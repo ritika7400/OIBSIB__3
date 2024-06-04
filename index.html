@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temperature Converter</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://media.wired.com/photos/59cbc98966372b12a75be507/master/w_1920,c_limit/mercury-thermometerTA-492194120.jpg'); /* Replace 'background_image.jpg' with your image path */
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    max-width: 500px; /* Set max-width for responsiveness */
+    text-align: center;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    margin-right: 10px;
+    color: #555;
+    font-size: 16px;
+  }
+  
+  .input-field {
+    width: 120px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .unit-select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .convert-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .convert-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .result {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .extra-options {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .extra-options button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #007bff;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+  }
+  
+  .extra-options button:hover {
+    color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Temperature Converter</h1>
+  <div class="input-group">
+    <label for="temperature">Temperature:</label>
+    <input type="number" id="temperature" class="input-field" placeholder="Enter temperature" step="0.01" required>
+    <select id="unit" class="unit-select">
+      <option value="celsius">Celsius</option>
+      <option value="fahrenheit">Fahrenheit</option>
+      <option value="kelvin">Kelvin</option>
+    </select>
+  </div>
+  <button id="convertBtn" class="convert-btn"><i class="fas fa-exchange-alt"></i> Convert</button>
+  <div class="result" id="result"></div>
+  <div class="extra-options">
+    <button id="clearBtn">Clear</button>
+    <button id="randomBtn">Random</button>
+  </div>
+</div>
+
+<script>
+document.getElementById("convertBtn").addEventListener("click", function() {
+  var temperature = parseFloat(document.getElementById("temperature").value);
+  var unit = document.getElementById("unit").value;
+  var result = document.getElementById("result");
+  
+  if (isNaN(temperature)) {
+    result.innerHTML = '<span style="color: red;">Please enter a valid number.</span>';
+    return;
+  }
+  
+  if (unit === "celsius") {
+    result.textContent = ${temperature.toFixed(2)} °C is ${celsiusToFahrenheit(temperature).toFixed(2)} °F and ${celsiusToKelvin(temperature).toFixed(2)} K.;
+  } else if (unit === "fahrenheit") {
+    result.textContent = ${temperature.toFixed(2)} °F is ${fahrenheitToCelsius(temperature).toFixed(2)} °C and ${fahrenheitToKelvin(temperature).toFixed(2)} K.;
+  } else if (unit === "kelvin") {
+    result.textContent = ${temperature.toFixed(2)} K is ${kelvinToCelsius(temperature).toFixed(2)} °C and ${kelvinToFahrenheit(temperature).toFixed(2)} °F.;
+  }
+});
+
+document.getElementById("clearBtn").addEventListener("click", function() {
+  document.getElementById("temperature").value = "";
+  document.getElementById("result").textContent = "";
+});
+
+document.getElementById("randomBtn").addEventListener("click", function() {
+  var randomTemperature = Math.random() * 100;
+  document.getElementById("temperature").value = randomTemperature.toFixed(2);
+  document.getElementById("convertBtn").click();
+});
+
+function celsiusToFahrenheit(celsius) {
+  return (celsius * 9 / 5) + 32;
+}
+
+function fahrenheitToCelsius(fahrenheit) {
+  return (fahrenheit - 32) * 5 / 9;
+}
+
+function celsiusToKelvin(celsius) {
+  return celsius + 273.15;
+}
+
+function kelvinToCelsius(kelvin) {
+  return kelvin - 273.15;
+}
+
+function fahrenheitToKelvin(fahrenheit) {
+  return (fahrenheit + 459.67) * 5 / 9;
+}
+
+function kelvinToFahrenheit(kelvin) {
+  return (kelvin * 9 / 5) - 459.67;
+}
+</script>
+
+</body>
+</html>
